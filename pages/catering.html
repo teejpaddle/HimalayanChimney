@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Catering &mdash; Himalayan Chimney</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--saffron:#D4700A;--deep-red:#7A1818;--gold:#B8841F;--cream:#F8F1E4;--warm-white:#FDFAF4;--charcoal:#1A1108;--smoke:#5C4D38;--mid:#8A7560;--light:#C4B49A}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--warm-white);color:var(--charcoal);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(26,17,8,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,132,31,0.18)}
+  .nav-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;font-weight:700;color:var(--cream);text-decoration:none}
+  .nav-logo em{font-style:italic;font-weight:400;color:var(--saffron)}
+  .nav-links{display:flex;gap:2.8rem;list-style:none}
+  .nav-links a{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(248,241,228,0.65);text-decoration:none;position:relative;transition:color 0.25s}
+  .nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:1px;background:var(--saffron);transform:scaleX(0);transform-origin:right;transition:transform 0.3s ease}
+  .nav-links a:hover{color:var(--cream)}
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-links a.active{color:var(--cream)}
+  .nav-links a.active::after{transform:scaleX(1);background:var(--gold)}
+
+  .page-header{background:var(--deep-red);padding:8.5rem 4rem 4.5rem;text-align:center;position:relative;overflow:hidden}
+  .page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 35% 55%,rgba(26,17,8,0.4) 0%,transparent 65%),repeating-linear-gradient(135deg,rgba(184,132,31,0.04) 0px,rgba(184,132,31,0.04) 1px,transparent 1px,transparent 32px)}
+  .ph-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.63rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+  .ph-title{font-family:'Libre Baskerville',serif;font-size:clamp(2.4rem,6vw,4.8rem);font-weight:700;color:var(--cream);line-height:1.1;letter-spacing:-0.01em}
+  .ph-title em{font-style:italic;font-weight:400;color:var(--gold)}
+  .ph-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;font-weight:300;color:rgba(248,241,228,0.65);margin-top:1.2rem}
+
+  .main{display:grid;grid-template-columns:1fr 1.1fr;min-height:85vh}
+
+  /* INFO PANEL */
+  .info{background:var(--charcoal);padding:5rem 4rem;display:flex;flex-direction:column;gap:3rem}
+  .blk-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.63rem;font-weight:600;letter-spacing:0.28em;text-transform:uppercase;color:var(--saffron);margin-bottom:0.7rem}
+  .blk-title{font-family:'Libre Baskerville',serif;font-size:1.25rem;font-weight:700;color:var(--cream);margin-bottom:0.8rem;letter-spacing:-0.01em}
+  .blk p,.blk a{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;font-weight:300;line-height:1.85;color:var(--mid);text-decoration:none;display:block}
+  .blk a:hover{color:var(--saffron)}
+  .blk strong{color:var(--cream);font-weight:500}
+  .tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.6rem}
+  .tag{border:1px solid rgba(184,132,31,0.25);padding:0.3rem 0.85rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)}
+  .hours-row{display:flex;justify-content:space-between;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;padding:0.55rem 0;border-bottom:1px solid rgba(184,132,31,0.1);color:var(--mid)}
+  .hours-row .d{font-weight:500;color:var(--cream);min-width:90px}
+  .call-btn{display:inline-flex;align-items:center;gap:0.6rem;background:var(--saffron);color:#fff;padding:0.9rem 1.8rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;transition:background 0.25s;width:fit-content;margin-top:0.8rem}
+  .call-btn:hover{background:#b85f07}
+
+  /* FORM PANEL */
+  .form-panel{background:var(--cream);padding:5rem 4rem}
+  .form-panel h2{font-family:'Libre Baskerville',serif;font-size:1.9rem;font-weight:700;color:var(--charcoal);margin-bottom:0.4rem;letter-spacing:-0.01em}
+  .form-panel h2 em{font-style:italic;font-weight:400;color:var(--deep-red)}
+  .form-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;font-weight:300;color:var(--smoke);margin-bottom:2rem}
+  .notice-bar{background:rgba(212,112,10,0.07);border-left:2px solid var(--saffron);padding:0.85rem 1.2rem;margin-bottom:1.8rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:400;color:var(--smoke)}
+  .notice-bar strong{font-weight:600;color:var(--charcoal)}
+
+  .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+  .fg{display:flex;flex-direction:column;gap:0.35rem}
+  .fg.full{grid-column:1/-1}
+  .fg label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--smoke)}
+  .fg label .r{color:var(--saffron)}
+  .fg input,.fg select,.fg textarea{background:#fff;border:1px solid rgba(92,77,56,0.22);padding:0.8rem 1rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:300;color:var(--charcoal);outline:none;transition:border-color 0.22s;appearance:none;width:100%}
+  .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(212,112,10,0.08)}
+  .fg textarea{resize:vertical;min-height:110px}
+  .fg input::placeholder,.fg textarea::placeholder{color:var(--light)}
+  .sub-btn{background:var(--charcoal);color:var(--cream);border:none;padding:0.95rem 2.4rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;transition:background 0.25s,transform 0.2s;margin-top:0.5rem}
+  .sub-btn:hover{background:var(--deep-red);transform:translateY(-2px)}
+  .success{display:none;background:var(--charcoal);color:var(--cream);padding:1.2rem 1.4rem;margin-top:1.2rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:300;border-left:2px solid var(--saffron)}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}.page-header{padding:7rem 2rem 3rem}.main{grid-template-columns:1fr}.info,.form-panel{padding:3.5rem 2rem}.fgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">Himalayan <em>Chimney</em></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="menu.html">Menu</a></li>
+    <li><a href="catering.html" class="active">Catering</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="ph-label">Events &amp; Gatherings</p>
+  <h1 class="ph-title">Cater Us for Your<br><em>Next Event</em></h1>
+  <p class="ph-sub">Bringing authentic Indian flavors to your celebrations</p>
+</div>
+
+<div class="main">
+  <div class="info">
+    <div class="blk reveal">
+      <p class="blk-label">The Restaurant</p>
+      <h3 class="blk-title">Himalayan Chimney</h3>
+      <p>We are currently facing issues with our online menu. If you are unable to see specific items, please reach out directly on our store number to place a carryout order.</p>
+    </div>
+
+    <div class="blk reveal" style="transition-delay:0.08s">
+      <p class="blk-label">Cuisines</p>
+      <div class="tags">
+        <span class="tag">Chicken</span><span class="tag">Fish</span><span class="tag">Indian</span>
+        <span class="tag">Salads</span><span class="tag">Seafood</span><span class="tag">Soup</span>
+      </div>
+    </div>
+
+    <div class="blk reveal" style="transition-delay:0.16s">
+      <p class="blk-label">Location &amp; Phone</p>
+      <h3 class="blk-title">Visit Us</h3>
+      <p><strong>134 W Church St<br>Champaign, IL 61820</strong></p>
+      <a href="tel:2175521834" style="margin-top:0.4rem;color:var(--saffron);font-weight:500">(217) 552-1834</a>
+      <a href="tel:2175521834" class="call-btn">Call to Order</a>
+    </div>
+
+    <div class="blk reveal" style="transition-delay:0.24s">
+      <p class="blk-label">Business Hours</p>
+      <div>
+        <div class="hours-row"><span class="d">Mon &ndash; Sat</span><span>11:00 AM &ndash; 3:00 PM &nbsp; 5:00 PM &ndash; 10:00 PM</span></div>
+        <div class="hours-row"><span class="d">Sunday</span><span>Noon &ndash; 3:00 PM &nbsp; 5:00 PM &ndash; 9:00 PM</span></div>
+      </div>
+    </div>
+
+    <div class="blk reveal" style="transition-delay:0.32s">
+      <p class="blk-label">Carryout Hours</p>
+      <div>
+        <div class="hours-row"><span class="d">Monday</span><span>11:00 AM &ndash; 2:40 PM &nbsp; 2:45 PM &ndash; 9:00 PM</span></div>
+        <div class="hours-row"><span class="d">Tue &ndash; Sat</span><span>11:00 AM &ndash; 2:40 PM &nbsp; 5:00 PM &ndash; 9:00 PM</span></div>
+        <div class="hours-row"><span class="d">Sunday</span><span>Noon &ndash; 2:40 PM &nbsp; 5:00 PM &ndash; 8:00 PM</span></div>
+      </div>
+    </div>
+
+    <div class="blk reveal" style="transition-delay:0.4s">
+      <p class="blk-label">Services</p>
+      <div class="tags">
+        <span class="tag">Free Parking</span><span class="tag">Full Bar</span>
+        <span class="tag">Vegetarian Options</span><span class="tag">Casual Dining</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-panel reveal">
+    <h2>Catering <em>Inquiry</em></h2>
+    <p class="form-sub">Tell us about your event and we will get back to you shortly.</p>
+    <div class="notice-bar"><strong>Urgent inquiries:</strong> Please call us directly at <strong>(217) 552-1834</strong>.</div>
+    <div class="fgrid" id="cateringForm">
+      <div class="fg"><label>Name <span class="r">*</span></label><input type="text" placeholder="Your full name" id="fn"/></div>
+      <div class="fg"><label>Phone</label><input type="tel" placeholder="(217) 000-0000" id="fp"/></div>
+      <div class="fg full"><label>Email <span class="r">*</span></label><input type="email" placeholder="your@email.com" id="fe"/></div>
+      <div class="fg"><label>Type of Event</label>
+        <select id="fev">
+          <option value="" disabled selected>Select event type</option>
+          <option>Wedding / Reception</option><option>Corporate Event</option>
+          <option>Birthday Party</option><option>Anniversary</option>
+          <option>Graduation</option><option>Religious / Cultural Event</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Date of Event <span class="r">*</span></label><input type="date" id="fd"/></div>
+      <div class="fg full"><label>Number of Guests <span class="r">*</span></label><input type="number" placeholder="Estimated guest count" min="1" id="fg2"/></div>
+      <div class="fg full"><label>Additional Information</label><textarea placeholder="Event details, dietary requirements, menu preferences&hellip;" id="fi"></textarea></div>
+      <div class="fg full"><button class="sub-btn" onclick="submitForm()">Submit Inquiry &rarr;</button></div>
+    </div>
+    <div class="success" id="successMsg">Thank you. Your catering inquiry has been received and we will be in touch shortly.</div>
+  </div>
+</div>
+
+<div style="background:var(--charcoal);padding:1.3rem 4rem;text-align:center;border-top:1px solid rgba(184,132,31,0.1)">
+  <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:400;color:var(--mid)">&copy; 2024 Himalayan Chimney &middot; 134 W Church St, Champaign, IL 61820 &middot; <a href="tel:2175521834" style="color:var(--saffron);text-decoration:none">(217) 552-1834</a></p>
+</div>
+
+<script>
+  function submitForm(){
+    if(!document.getElementById('fn').value.trim()||!document.getElementById('fe').value.trim()||!document.getElementById('fg2').value.trim()||!document.getElementById('fd').value.trim()){alert('Please fill in all required fields.');return}
+    document.getElementById('cateringForm').style.display='none';
+    document.getElementById('successMsg').style.display='block';
+  }
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.05});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
