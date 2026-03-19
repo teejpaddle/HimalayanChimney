@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Himalayan Chimney — Indian Bistro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #D4700A;
+    --deep-red: #7A1818;
+    --gold: #B8841F;
+    --cream: #F8F1E4;
+    --warm-white: #FDFAF4;
+    --charcoal: #1A1108;
+    --smoke: #5C4D38;
+    --mid: #8A7560;
+    --light: #C4B49A;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--warm-white);
+    color: var(--charcoal);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(26,17,8,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(184,132,31,0.18);
+    animation: fadeDown 0.6s ease forwards;
+  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+
+  .nav-logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--cream);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+  }
+  .nav-logo em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--saffron);
+  }
+
+  .nav-links { display: flex; gap: 2.8rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(248,241,228,0.65);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.25s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -5px; left: 0; right: 0;
+    height: 1px; background: var(--saffron);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-links a.active { color: var(--cream); }
+  .nav-links a.active::after { transform: scaleX(1); background: var(--gold); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--charcoal);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 8rem 2rem 5rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 65% 35%, rgba(212,112,10,0.1) 0%, transparent 65%),
+      radial-gradient(ellipse 45% 75% at 15% 85%, rgba(122,24,24,0.15) 0%, transparent 55%);
+  }
+
+  .hero-grain {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 500;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.3s ease forwards;
+  }
+
+  .hero-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(3rem, 8.5vw, 7rem);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.05;
+    text-align: center;
+    letter-spacing: -0.01em;
+    opacity: 0; animation: fadeUp 0.8s 0.5s ease forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--saffron);
+  }
+
+  .hero-rule {
+    width: 48px; height: 1px;
+    background: var(--gold);
+    margin: 2.8rem auto;
+    opacity: 0; animation: fadeUp 0.6s 0.75s ease forwards;
+  }
+
+  .hero-sub {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--light);
+    text-align: center;
+    max-width: 480px;
+    letter-spacing: 0.01em;
+    opacity: 0; animation: fadeUp 0.7s 0.95s ease forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    margin-top: 3rem;
+    opacity: 0; animation: fadeUp 0.7s 1.15s ease forwards;
+  }
+
+  .btn-primary {
+    background: var(--saffron); color: #fff;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600; font-size: 0.7rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.95rem 2.2rem;
+    border: none; cursor: pointer; text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: #b85f07; transform: translateY(-2px); }
+
+  .btn-ghost {
+    background: transparent; color: rgba(248,241,228,0.7);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 500; font-size: 0.7rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.95rem 2.2rem;
+    border: 1px solid rgba(248,241,228,0.2);
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.25s, color 0.25s, transform 0.2s;
+  }
+  .btn-ghost:hover { border-color: rgba(248,241,228,0.5); color: var(--cream); transform: translateY(-2px); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    color: var(--smoke);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+    animation: fadeUp 0.8s 1.6s ease forwards; opacity: 0;
+  }
+  .scroll-line {
+    width: 1px; height: 36px;
+    background: linear-gradient(to bottom, var(--saffron), transparent);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.9} }
+
+  /* ── INTRO ── */
+  .intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 68vh;
+  }
+
+  .intro-text {
+    background: var(--cream);
+    padding: 6rem 5rem 6rem 7rem;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.63rem; font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--saffron);
+    margin-bottom: 1.6rem;
+  }
+
+  .intro-heading {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--charcoal);
+    margin-bottom: 1.6rem;
+    letter-spacing: -0.01em;
+  }
+  .intro-heading em { font-style: italic; font-weight: 400; color: var(--deep-red); }
+
+  .intro-body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--smoke);
+    margin-bottom: 2.4rem;
+    max-width: 400px;
+  }
+
+  .cater-link {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 0.85rem 1.8rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s;
+    width: fit-content;
+  }
+  .cater-link:hover { background: var(--deep-red); }
+  .cater-link .arr { font-size: 0.85rem; }
+
+  .intro-panel {
+    background: var(--charcoal);
+    position: relative; overflow: hidden;
+    min-height: 480px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .intro-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,112,10,0.18) 0%, transparent 65%);
+  }
+  .panel-watermark {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 14rem; font-weight: 700; font-style: italic;
+    color: rgba(184,132,31,0.07);
+    letter-spacing: -0.04em;
+    user-select: none;
+    position: relative;
+    line-height: 1;
+  }
+
+  /* ── FEATURES ── */
+  .features {
+    background: #110D05;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature {
+    padding: 4rem 3rem;
+    border-right: 1px solid rgba(184,132,31,0.1);
+    transition: background 0.35s;
+  }
+  .feature:last-child { border-right: none; }
+  .feature:hover { background: rgba(212,112,10,0.04); }
+
+  .feature-rule {
+    width: 24px; height: 1px;
+    background: var(--saffron);
+    margin-bottom: 1.8rem;
+  }
+
+  .feature-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.1rem; font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.9rem;
+    letter-spacing: -0.01em;
+  }
+
+  .feature-desc {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--mid);
+  }
+
+  /* ── REVIEWS ── */
+  .reviews {
+    background: var(--warm-white);
+    padding: 7rem 4rem;
+  }
+
+  .reviews-header {
+    text-align: center; margin-bottom: 4.5rem;
+  }
+
+  .reviews-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-top: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    max-width: 1160px; margin: 0 auto;
+  }
+
+  .review-card {
+    background: var(--cream);
+    padding: 2.8rem;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .review-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,17,8,0.06); }
+
+  .stars {
+    color: var(--saffron);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.4rem;
+  }
+
+  .review-text {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--smoke);
+    margin-bottom: 1.6rem;
+    font-style: italic;
+  }
+
+  .reviewer {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .review-accent {
+    position: absolute;
+    top: 2rem; left: 2.5rem;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 6rem; line-height: 1;
+    font-weight: 700; color: var(--saffron);
+    opacity: 0.07;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── SOCIAL ── */
+  .social-band {
+    background: var(--deep-red);
+    padding: 4rem;
+    text-align: center;
+  }
+  .social-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.6rem; font-style: italic;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 2rem;
+  }
+  .social-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .social-link {
+    background: rgba(248,241,228,0.08);
+    border: 1px solid rgba(248,241,228,0.2);
+    color: rgba(248,241,228,0.8);
+    padding: 0.75rem 1.8rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+  }
+  .social-link:hover { background: rgba(248,241,228,0.15); border-color: rgba(248,241,228,0.4); color: var(--cream); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--charcoal);
+    padding: 4.5rem 4rem;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 4rem;
+    border-top: 1px solid rgba(184,132,31,0.12);
+  }
+
+  .footer-logo {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--cream); text-decoration: none;
+    display: block; margin-bottom: 1.2rem;
+  }
+  .footer-logo em { font-style: italic; font-weight: 400; color: var(--saffron); }
+
+  .footer-brand p {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.86rem; font-weight: 300;
+    color: var(--mid); line-height: 1.8; max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.63rem; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.4rem;
+  }
+
+  .footer-col a, .footer-col p {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.86rem; font-weight: 300;
+    color: var(--mid); text-decoration: none;
+    line-height: 2.2; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--cream); }
+
+  .footer-bar {
+    background: rgba(0,0,0,0.25);
+    padding: 1.1rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(184,132,31,0.08);
+  }
+  .footer-bar p {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.7rem; font-weight: 400;
+    color: var(--smoke); letter-spacing: 0.04em;
+  }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    nav { padding: 1.1rem 1.5rem; }
+    .nav-links { gap: 1.8rem; }
+    .intro { grid-template-columns: 1fr; }
+    .intro-text { padding: 4rem 2rem; }
+    .intro-panel { display: none; }
+    .features { grid-template-columns: 1fr; }
+    .feature { border-right: none; border-bottom: 1px solid rgba(184,132,31,0.1); }
+    .reviews { padding: 5rem 2rem; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 1.5px; }
+    footer { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 2rem; }
+    .footer-bar { padding: 1rem 2rem; flex-direction: column; gap: 0.4rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Himalayan <em>Chimney</em></a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="pages/menu.html">Menu</a></li>
+    <li><a href="pages/catering.html">Catering</a></li>
+    <li><a href="pages/contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+
+  <p class="hero-eyebrow">Champaign, Illinois</p>
+  <h1 class="hero-title">Himalayan<br><em>Chimney</em></h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">A local Indian Bistro serving dishes from the pristine Himalayas to the warm tropical south.</p>
+  <div class="hero-cta">
+    <a href="pages/menu.html" class="btn-primary">Explore Menu</a>
+    <a href="pages/catering.html" class="btn-ghost">Catering Inquiry</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="intro-text reveal">
+    <p class="label">Our Story</p>
+    <h2 class="intro-heading">A culinary<br><em>journey</em> like<br>no other</h2>
+    <p class="intro-body">We serve a variety of delicious menu items ranging from the pristine Himalayas to the warm tropical south. Every dish is crafted with care, using rich spices and time-honored techniques.</p>
+    <a href="pages/catering.html" class="cater-link">We Cater <span class="arr">&rarr;</span></a>
+  </div>
+  <div class="intro-panel">
+    <span class="panel-watermark">HC</span>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="features">
+  <div class="feature reveal">
+    <div class="feature-rule"></div>
+    <div class="feature-title">Vegetarian Options</div>
+    <p class="feature-desc">A rich selection of plant-based dishes — from creamy dals to vibrant paneer curries, crafted with the same care as our meat dishes.</p>
+  </div>
+  <div class="feature reveal" style="transition-delay:0.12s">
+    <div class="feature-rule"></div>
+    <div class="feature-title">Full Bar</div>
+    <p class="feature-desc">Enjoy a handcrafted cocktail or a refreshing mango lassi alongside your meal. Our full bar complements every course.</p>
+  </div>
+  <div class="feature reveal" style="transition-delay:0.24s">
+    <div class="feature-rule"></div>
+    <div class="feature-title">Free Parking</div>
+    <p class="feature-desc">Convenient free parking is available. Come as you are, bring the family, and stay as long as you like.</p>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="reviews-header reveal">
+    <p class="label">Guest Testimonials</p>
+    <h2 class="reviews-title">What Our Guests Say</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <span class="review-accent">&ldquo;</span>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"It will not be a hyperbole that it is one of the best Indian restaurants in the US. My favorites are Pistachio Chicken, Chicken Biryani, Chettinad and Chicken Korma. Himalayan Chimney remains my favorite."</p>
+      <div class="reviewer">Amit V.</div>
+    </div>
+    <div class="review-card reveal" style="transition-delay:0.12s">
+      <span class="review-accent">&ldquo;</span>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"Fairly new to the area and we are compiling a list of our new favorites. This restaurant made the list! The service was great, the food was absolutely delicious. We will definitely eat here again."</p>
+      <div class="reviewer">Meme W.</div>
+    </div>
+    <div class="review-card reveal" style="transition-delay:0.24s">
+      <span class="review-accent">&ldquo;</span>
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"This place is phenomenal. The Chicken 65 is crispy, flavorful, and has some nice heat to it. If you're looking for a locally owned restaurant with entrees loaded with flavor and freshness, this is it."</p>
+      <div class="reviewer">Jennifer W.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section class="social-band reveal">
+  <h3 class="social-title">Follow Our Journey</h3>
+  <div class="social-links">
+    <a href="#" class="social-link">Facebook</a>
+    <a href="#" class="social-link">Yelp</a>
+    <a href="#" class="social-link">TripAdvisor</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="index.html" class="footer-logo">Himalayan <em>Chimney</em></a>
+    <p>A local Indian Bistro in the heart of Champaign, IL &mdash; serving authentic flavors from North to South India.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigate</h4>
+    <a href="index.html">Home</a>
+    <a href="pages/menu.html">Menu</a>
+    <a href="pages/catering.html">Catering</a>
+    <a href="pages/contact.html">Contact</a>
+  </div>
+  <div class="footer-col">
+    <h4>Visit</h4>
+    <p>134 W Church St</p>
+    <p>Champaign, IL 61820</p>
+    <a href="tel:2175521834">(217) 552-1834</a>
+    <p style="margin-top:0.6rem;color:var(--saffron);font-size:0.8rem;font-weight:400;">Mon&ndash;Sat &nbsp;11AM&ndash;10PM</p>
+    <p style="color:var(--saffron);font-size:0.8rem;font-weight:400;">Sun &nbsp;Noon&ndash;9PM</p>
+  </div>
+</footer>
+<div class="footer-bar">
+  <p>&copy; 2024 Himalayan Chimney. All rights reserved.</p>
+  <p>134 W Church St &middot; Champaign, IL 61820</p>
+</div>
+
+<script>
+  const obs = new IntersectionObserver(entries =>
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
