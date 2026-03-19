@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Menu &mdash; Himalayan Chimney</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron:#D4700A; --deep-red:#7A1818; --gold:#B8841F;
+    --cream:#F8F1E4; --warm-white:#FDFAF4; --charcoal:#1A1108;
+    --smoke:#5C4D38; --mid:#8A7560; --light:#C4B49A;
+  }
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--warm-white);color:var(--charcoal);font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3rem;background:rgba(26,17,8,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(184,132,31,0.18)}
+  .nav-logo{font-family:'Libre Baskerville',serif;font-size:1.2rem;font-weight:700;color:var(--cream);letter-spacing:0.01em;text-decoration:none}
+  .nav-logo em{font-style:italic;font-weight:400;color:var(--saffron)}
+  .nav-links{display:flex;gap:2.8rem;list-style:none}
+  .nav-links a{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(248,241,228,0.65);text-decoration:none;position:relative;transition:color 0.25s}
+  .nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:1px;background:var(--saffron);transform:scaleX(0);transform-origin:right;transition:transform 0.3s ease}
+  .nav-links a:hover{color:var(--cream)}
+  .nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+  .nav-links a.active{color:var(--cream)}
+  .nav-links a.active::after{transform:scaleX(1);background:var(--gold)}
+
+  .page-header{background:var(--charcoal);padding:8.5rem 4rem 4.5rem;text-align:center;position:relative;overflow:hidden}
+  .page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 65% at 50% 55%,rgba(212,112,10,0.09) 0%,transparent 65%)}
+  .ph-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.63rem;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:var(--saffron);margin-bottom:1rem}
+  .ph-title{font-family:'Libre Baskerville',serif;font-size:clamp(2.6rem,6.5vw,5rem);font-weight:700;color:var(--cream);line-height:1.05;letter-spacing:-0.01em}
+  .ph-title em{font-style:italic;font-weight:400;color:var(--saffron)}
+  .ph-sub{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;font-weight:300;color:var(--light);margin-top:1.2rem;letter-spacing:0.02em}
+
+  .notice{background:var(--deep-red);padding:0.9rem 2rem;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.8rem;font-weight:400;color:rgba(248,241,228,0.85);letter-spacing:0.01em}
+  .notice strong{font-weight:600;color:var(--cream)}
+
+  .menu-nav{background:var(--cream);padding:1.2rem 3rem;display:flex;gap:0.4rem;flex-wrap:wrap;border-bottom:1px solid rgba(184,132,31,0.18);position:sticky;top:62px;z-index:50}
+  .tab{background:none;border:1px solid rgba(92,77,56,0.18);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);padding:0.4rem 0.85rem;cursor:pointer;transition:all 0.2s}
+  .tab:hover,.tab.active{background:var(--charcoal);border-color:var(--charcoal);color:var(--cream)}
+
+  .menu-body{padding:0 4rem 6rem;max-width:1280px;margin:0 auto}
+
+  .menu-sec{padding:4.5rem 0 2rem;border-bottom:1px solid rgba(184,132,31,0.12)}
+  .menu-sec:last-child{border-bottom:none}
+  .sec-head{display:flex;align-items:baseline;gap:2rem;margin-bottom:2rem}
+  .sec-title{font-family:'Libre Baskerville',serif;font-size:1.8rem;font-weight:700;color:var(--charcoal);letter-spacing:-0.01em}
+  .sec-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(184,132,31,0.35),transparent)}
+  .sec-note{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:300;color:var(--mid);margin-bottom:1.8rem;font-style:italic}
+
+  .items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5px}
+  .item{background:var(--cream);padding:1.2rem 1.6rem;display:flex;justify-content:space-between;align-items:start;transition:background 0.2s}
+  .item:hover{background:#ede5d2}
+  .item-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:500;color:var(--charcoal);line-height:1.4}
+  .item-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;color:var(--saffron);white-space:nowrap;margin-left:1rem}
+
+  .items-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:0}
+  .list-item{padding:0.8rem 1.1rem;border-bottom:1px solid rgba(184,132,31,0.1);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:400;color:var(--charcoal);transition:color 0.2s,background 0.2s}
+  .list-item:hover{background:var(--cream);color:var(--deep-red)}
+
+  .tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+  .tag{background:var(--charcoal);color:var(--cream);padding:0.45rem 1.1rem;display:inline-flex;flex-direction:column;align-items:center;gap:0.1rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:500}
+  .tag-p{color:var(--saffron);font-size:0.68rem;font-weight:400}
+
+  .bev-grp{margin-bottom:2rem}
+  .bev-lbl{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.63rem;font-weight:600;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:0.9rem}
+  .bev-items{display:flex;flex-wrap:wrap;gap:0.4rem}
+  .bev{border:1px solid rgba(184,132,31,0.25);padding:0.38rem 0.9rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:400;color:var(--smoke);display:inline-flex;align-items:center;gap:0.5rem}
+  .bev .bp{color:var(--saffron);font-size:0.72rem;font-weight:600}
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:768px){nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}.page-header{padding:7rem 2rem 3rem}.menu-nav{padding:1rem 1.5rem;top:58px}.menu-body{padding:0 1.5rem 4rem}.items-grid,.items-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-logo">Himalayan <em>Chimney</em></a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="menu.html" class="active">Menu</a></li>
+    <li><a href="catering.html">Catering</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="ph-label">Our Kitchen</p>
+  <h1 class="ph-title">The <em>Menu</em></h1>
+  <p class="ph-sub">From the Himalayas to the tropical south &mdash; every dish tells a story</p>
+</div>
+
+<div class="notice">
+  <strong>Please note:</strong> If you cannot find a specific item, call us at <strong>(217) 552-1834</strong> to place a carryout order.
+</div>
+
+<div class="menu-nav">
+  <button class="tab active" onclick="go('starters',this)">Starters</button>
+  <button class="tab" onclick="go('chicken',this)">Chicken</button>
+  <button class="tab" onclick="go('lamb',this)">Lamb &amp; Goat</button>
+  <button class="tab" onclick="go('veg',this)">Vegetarian</button>
+  <button class="tab" onclick="go('seafood',this)">Seafood</button>
+  <button class="tab" onclick="go('tandoor',this)">Tandoor</button>
+  <button class="tab" onclick="go('biryani',this)">Biryani &amp; Rice</button>
+  <button class="tab" onclick="go('specials',this)">Specials</button>
+  <button class="tab" onclick="go('bread',this)">Bread</button>
+  <button class="tab" onclick="go('soups',this)">Soups &amp; Salads</button>
+  <button class="tab" onclick="go('south',this)">Taste of South</button>
+  <button class="tab" onclick="go('sides',this)">Sides</button>
+  <button class="tab" onclick="go('desserts',this)">Desserts</button>
+  <button class="tab" onclick="go('beverages',this)">Beverages</button>
+</div>
+
+<div class="menu-body">
+
+  <div class="menu-sec reveal" id="starters">
+    <div class="sec-head"><h2 class="sec-title">Starters</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Avocado Jhalmuri</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Chicken 65</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Lassoni Gobi</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Calamari</span><span class="item-price">$10.99</span></div>
+      <div class="item"><span class="item-name">Paneer Chili</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Samosa Chaat</span><span class="item-price">$6.99</span></div>
+      <div class="item"><span class="item-name">Samosa</span><span class="item-price">$5.99</span></div>
+      <div class="item"><span class="item-name">Tawa Fish</span><span class="item-price">$10.99</span></div>
+      <div class="item"><span class="item-name">Chilly Momo</span><span class="item-price">$10.99</span></div>
+      <div class="item"><span class="item-name">Fried Momo</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Chicken Chili</span><span class="item-price">$10.99</span></div>
+      <div class="item"><span class="item-name">Papdi Chaat</span><span class="item-price">$7.99</span></div>
+      <div class="item"><span class="item-name">Mushroom Pakora</span><span class="item-price">$9.99</span></div>
+      <div class="item"><span class="item-name">Tawa Prawn</span><span class="item-price">$11.99</span></div>
+      <div class="item"><span class="item-name">Masala Papad</span><span class="item-price">$4.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="chicken">
+    <div class="sec-head"><h2 class="sec-title">Chicken Menu</h2><div class="sec-line"></div></div>
+    <p class="sec-note">All dishes $16.99+</p>
+    <div class="items-list">
+      <div class="list-item">Chicken Curry</div><div class="list-item">Chicken Kadai</div>
+      <div class="list-item">Chicken Saag</div><div class="list-item">Chicken Vindaloo</div>
+      <div class="list-item">Butter Chicken</div><div class="list-item">Egg Curry</div>
+      <div class="list-item">Himalayan Subz Murgh</div><div class="list-item">Chicken Tikka Masala</div>
+      <div class="list-item">Chicken Korma</div><div class="list-item">Chicken Jalfrezi</div>
+      <div class="list-item">Chicken Dhaba</div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="lamb">
+    <div class="sec-head"><h2 class="sec-title">Lamb &amp; Goat</h2><div class="sec-line"></div></div>
+    <p class="sec-note">All dishes $17.99+</p>
+    <div class="items-list">
+      <div class="list-item">Bhuna Gosht</div><div class="list-item">Goat Curry</div>
+      <div class="list-item">Goat Kosha</div><div class="list-item">Lamb Curry</div>
+      <div class="list-item">Lamb Korma</div><div class="list-item">Lamb Saag</div>
+      <div class="list-item">Lamb Vindaloo</div><div class="list-item">Aloo Gosht</div>
+      <div class="list-item">Lamb Keema Matar</div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="veg">
+    <div class="sec-head"><h2 class="sec-title">Vegetarian</h2><div class="sec-line"></div></div>
+    <p class="sec-note">All dishes $15.99+</p>
+    <div class="items-list">
+      <div class="list-item">Aloo Gobi</div><div class="list-item">Baingan Patyala</div>
+      <div class="list-item">Bhindi Dopyaza</div><div class="list-item">Chana Pindi</div>
+      <div class="list-item">Dal Himalayan</div><div class="list-item">Dal Tadka</div>
+      <div class="list-item">Methi Malai Matar</div><div class="list-item">Saag Aloo</div>
+      <div class="list-item">Saag Paneer</div><div class="list-item">Shahi Paneer</div>
+      <div class="list-item">Vegetable Korma</div><div class="list-item">Paneer Korma</div>
+      <div class="list-item">Malai Kofta</div><div class="list-item">Kadai Paneer</div>
+      <div class="list-item">Paneer Tikka Masala</div><div class="list-item">Paneer Makni</div>
+      <div class="list-item">Paneer Butter Masala</div><div class="list-item">Mixed Vegetable Curry</div>
+      <div class="list-item">Vegetable Jalfrezi</div><div class="list-item">Jackfruit Curry</div>
+      <div class="list-item">Mushroom Malai Matar</div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="seafood">
+    <div class="sec-head"><h2 class="sec-title">Seafood</h2><div class="sec-line"></div></div>
+    <p class="sec-note">All dishes $17.99+</p>
+    <div class="items-list">
+      <div class="list-item">Fish Curry</div><div class="list-item">Fish Moilee</div>
+      <div class="list-item">Goan Shrimp</div><div class="list-item">Shrimp Curry</div>
+      <div class="list-item">Shrimp Jalfrezi</div><div class="list-item">Shrimp Malai Curry</div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="tandoor">
+    <div class="sec-head"><h2 class="sec-title">Tandoor</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Achari Chicken</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Adraki Lamb Chops</span><span class="item-price">$24.99+</span></div>
+      <div class="item"><span class="item-name">Lamb Seekh Kebab</span><span class="item-price">$17.99+</span></div>
+      <div class="item"><span class="item-name">Malai Chicken</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Murgh Reshmi Kebab</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Salmon Tikka</span><span class="item-price">$18.99+</span></div>
+      <div class="item"><span class="item-name">Sofiya Paneer</span><span class="item-price">$16.99+</span></div>
+      <div class="item"><span class="item-name">Tandoori Chicken (4 pcs)</span><span class="item-price">$10.99+</span></div>
+      <div class="item"><span class="item-name">Tandoori Chicken (8 pcs)</span><span class="item-price">$18.99+</span></div>
+      <div class="item"><span class="item-name">Tandoori Quadruple Play</span><span class="item-price">$20.99+</span></div>
+      <div class="item"><span class="item-name">Tandoori Vegetables</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Tandoori Shrimp</span><span class="item-price">$16.99+</span></div>
+      <div class="item"><span class="item-name">Lamb Boti Kebab</span><span class="item-price">$18.99+</span></div>
+      <div class="item"><span class="item-name">Fish Tikka</span><span class="item-price">$16.99+</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="biryani">
+    <div class="sec-head"><h2 class="sec-title">Biryani &amp; Rice</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Chicken Biryani</span><span class="item-price">$15.99</span></div>
+      <div class="item"><span class="item-name">Goat Biryani</span><span class="item-price">$16.99</span></div>
+      <div class="item"><span class="item-name">Lamb Biryani</span><span class="item-price">$16.99</span></div>
+      <div class="item"><span class="item-name">Mix Biryani</span><span class="item-price">$16.99</span></div>
+      <div class="item"><span class="item-name">Vegetable Biryani</span><span class="item-price">$15.99</span></div>
+      <div class="item"><span class="item-name">Jackfruit Biryani</span><span class="item-price">$15.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="specials">
+    <div class="sec-head"><h2 class="sec-title">Himalayan Specials</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item" style="background:var(--cream);border-left:2px solid var(--saffron)"><span class="item-name">Pistachio Chicken</span><span class="item-price">$18.99+</span></div>
+      <div class="item" style="background:var(--cream);border-left:2px solid var(--saffron)"><span class="item-name">Lamb Chops Masala</span><span class="item-price">$20.99+</span></div>
+      <div class="item" style="background:var(--cream);border-left:2px solid var(--saffron)"><span class="item-name">Nalli Gosht</span><span class="item-price">$24.99+</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="bread">
+    <div class="sec-head"><h2 class="sec-title">Bread Selection</h2><div class="sec-line"></div></div>
+    <div class="tags">
+      <div class="tag">Plain Naan<span class="tag-p">$2.99</span></div>
+      <div class="tag">Garlic Naan<span class="tag-p">$3.99</span></div>
+      <div class="tag">Roti<span class="tag-p">$2.99</span></div>
+      <div class="tag">Pesto Naan<span class="tag-p">$3.99</span></div>
+      <div class="tag">Aloo Paratha<span class="tag-p">$3.99</span></div>
+      <div class="tag">Cheese Naan<span class="tag-p">$3.99</span></div>
+      <div class="tag">Himalayan Chimney Naan<span class="tag-p">$4.99</span></div>
+      <div class="tag">Kashmiri Naan<span class="tag-p">$3.99</span></div>
+      <div class="tag">Lachha Paratha<span class="tag-p">$3.99</span></div>
+      <div class="tag">Onion Kulcha<span class="tag-p">$3.99</span></div>
+      <div class="tag">Paneer Kulcha<span class="tag-p">$3.99</span></div>
+      <div class="tag">Pudina Paratha<span class="tag-p">$4.99</span></div>
+      <div class="tag">Chilli Naan<span class="tag-p">$3.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="soups">
+    <div class="sec-head"><h2 class="sec-title">Soups &amp; Salads</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Avocado Salad</span><span class="item-price">$7.99</span></div>
+      <div class="item"><span class="item-name">House Green Salad</span><span class="item-price">$5.99</span></div>
+      <div class="item"><span class="item-name">Mulligatawny Soup</span><span class="item-price">$5.99</span></div>
+      <div class="item"><span class="item-name">Tomato Shorba</span><span class="item-price">$5.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="south">
+    <div class="sec-head"><h2 class="sec-title">Taste of South</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Chicken Chettinad</span><span class="item-price">$16.99+</span></div>
+      <div class="item"><span class="item-name">Chicken Madras</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Goat Madras</span><span class="item-price">$17.99+</span></div>
+      <div class="item"><span class="item-name">Gongura Chicken</span><span class="item-price">$15.99+</span></div>
+      <div class="item"><span class="item-name">Gongura Goat</span><span class="item-price">$17.99+</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="sides">
+    <div class="sec-head"><h2 class="sec-title">Side Orders</h2><div class="sec-line"></div></div>
+    <div class="tags">
+      <div class="tag">Rice<span class="tag-p">$2.99</span></div>
+      <div class="tag">Cucumber Raita<span class="tag-p">$2.99</span></div>
+      <div class="tag">Mixed Pickle<span class="tag-p">$1.99</span></div>
+      <div class="tag">Papadum<span class="tag-p">$2.99</span></div>
+      <div class="tag">Onion Salad<span class="tag-p">$1.99</span></div>
+      <div class="tag">Yogurt<span class="tag-p">$2.49</span></div>
+      <div class="tag">Mango Chutney<span class="tag-p">$2.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="desserts">
+    <div class="sec-head"><h2 class="sec-title">Desserts</h2><div class="sec-line"></div></div>
+    <div class="items-grid">
+      <div class="item"><span class="item-name">Gulab Jamun</span><span class="item-price">$3.99</span></div>
+      <div class="item"><span class="item-name">Kheer</span><span class="item-price">$3.99</span></div>
+      <div class="item"><span class="item-name">Cheesecake</span><span class="item-price">$4.99</span></div>
+      <div class="item"><span class="item-name">Rasmalai</span><span class="item-price">$4.99</span></div>
+    </div>
+  </div>
+
+  <div class="menu-sec reveal" id="beverages">
+    <div class="sec-head"><h2 class="sec-title">Beverages</h2><div class="sec-line"></div></div>
+    <div class="bev-grp">
+      <div class="bev-lbl">Specialty Drinks</div>
+      <div class="bev-items">
+        <div class="bev">Fresh Lime Soda<span class="bp">$5.00</span></div>
+        <div class="bev">Mango Lassi<span class="bp">$5.00</span></div>
+        <div class="bev">Masala Tea<span class="bp">$3.00</span></div>
+        <div class="bev">Milk<span class="bp">$3.00</span></div>
+        <div class="bev">Bottled Water<span class="bp">$1.99</span></div>
+      </div>
+    </div>
+    <div class="bev-grp">
+      <div class="bev-lbl">Soft Drinks &mdash; $2.99</div>
+      <div class="bev-items">
+        <div class="bev">Pepsi</div><div class="bev">Diet Pepsi</div>
+        <div class="bev">Mountain Dew</div><div class="bev">Sierra Mist</div>
+        <div class="bev">Ginger Ale</div><div class="bev">Lemonade</div>
+        <div class="bev">Sweet Tea</div><div class="bev">Unsweet Tea</div>
+        <div class="bev">Club Soda</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="background:var(--charcoal);padding:1.3rem 4rem;text-align:center;border-top:1px solid rgba(184,132,31,0.1)">
+  <p style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:400;color:var(--mid)">&copy; 2024 Himalayan Chimney &middot; 134 W Church St, Champaign, IL 61820 &middot; <a href="tel:2175521834" style="color:var(--saffron);text-decoration:none">(217) 552-1834</a></p>
+</div>
+
+<script>
+  function go(id,btn){
+    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:0.05});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
